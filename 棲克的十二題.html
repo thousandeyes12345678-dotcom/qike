@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>致小喜鵲的十二題</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+  :root{
+    --bg-0:#f7f1e6;
+    --bg-1:#efe3c9;
+    --bg-2:#cbb789;
+    --bg-3:#7a5a52;
+    --bg-4:#2b1620;
+    --ink-0:#3a2e26;
+    --ink-1:#f3e7d8;
+    --gold:#b8863b;
+    --plum:#5e2536;
+    --line:rgba(58,46,38,0.18);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    font-family:'Noto Sans TC',sans-serif;
+    background:var(--bg-0);
+    color:var(--ink-0);
+    transition:background 1.2s ease, color 1.2s ease;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px 16px;
+    overflow-x:hidden;
+  }
+
+  body.stage-1{background:linear-gradient(160deg,var(--bg-0),var(--bg-1));}
+  body.stage-2{background:linear-gradient(160deg,var(--bg-1),var(--bg-2)); color:#2c2018;}
+  body.stage-3{background:linear-gradient(160deg,var(--bg-2),var(--bg-3)); color:var(--ink-1);}
+  body.stage-4{background:radial-gradient(circle at 30% 20%, var(--plum), var(--bg-4) 70%); color:var(--ink-1);}
+
+  .card{
+    width:100%;
+    max-width:560px;
+    background:rgba(255,255,255,0.55);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:40px 36px;
+    box-shadow:0 20px 60px rgba(58,46,38,0.12);
+    position:relative;
+    transition:background 1s ease, border-color 1s ease, box-shadow 1s ease;
+  }
+  body.stage-2 .card{background:rgba(255,250,235,0.55);}
+  body.stage-3 .card{background:rgba(40,26,22,0.55); border-color:rgba(243,231,216,0.18);}
+  body.stage-4 .card{background:rgba(20,8,12,0.62); border-color:rgba(243,231,216,0.12); box-shadow:0 30px 80px rgba(0,0,0,0.5);}
+
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:0.18em;
+    color:var(--gold);
+    margin-bottom:6px;
+    font-weight:500;
+  }
+
+  h1{
+    font-family:'Noto Serif TC',serif;
+    font-size:26px;
+    font-weight:900;
+    margin:0 0 6px;
+    line-height:1.4;
+  }
+  .sub{
+    font-size:13.5px;
+    opacity:0.72;
+    margin:0 0 26px;
+    line-height:1.7;
+  }
+
+  .progress-wrap{
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:22px;
+  }
+  .progress-track{
+    flex:1; height:5px; border-radius:99px;
+    background:var(--line); overflow:hidden;
+  }
+  .progress-fill{
+    height:100%; width:0%;
+    background:var(--gold);
+    transition:width 0.5s ease, background 1s ease;
+  }
+  body.stage-3 .progress-fill, body.stage-4 .progress-fill{background:#d98a9b;}
+  .progress-num{font-size:12px; opacity:0.6; min-width:40px; text-align:right;}
+
+  .narration{
+    font-family:'Noto Serif TC',serif;
+    font-size:13px;
+    font-style:italic;
+    opacity:0.78;
+    margin-bottom:14px;
+    line-height:1.8;
+    border-left:2px solid var(--gold);
+    padding-left:12px;
+    transition:opacity .4s ease;
+  }
+
+  .q-text{
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:18px;
+    line-height:1.6;
+  }
+
+  .opt{
+    display:block;
+    width:100%;
+    text-align:left;
+    padding:13px 16px;
+    margin-bottom:10px;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:rgba(255,255,255,0.4);
+    color:inherit;
+    font-size:14.5px;
+    font-family:inherit;
+    cursor:pointer;
+    transition:transform .15s ease, background .2s ease, border-color .2s ease;
+  }
+  body.stage-3 .opt, body.stage-4 .opt{background:rgba(255,255,255,0.06); border-color:rgba(243,231,216,0.2);}
+  .opt:hover{transform:translateX(4px); border-color:var(--gold); background:rgba(184,134,59,0.12);}
+  .opt:active{transform:scale(0.98);}
+
+  textarea.opt-input{
+    width:100%; min-height:84px; resize:vertical;
+    padding:13px 16px; border-radius:12px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,0.4);
+    color:inherit; font-family:inherit; font-size:14.5px;
+    margin-bottom:14px;
+  }
+  body.stage-3 textarea.opt-input, body.stage-4 textarea.opt-input{
+    background:rgba(255,255,255,0.06); border-color:rgba(243,231,216,0.2);
+  }
+
+  .echo{
+    font-size:13px; opacity:0; max-height:0; overflow:hidden;
+    transition:opacity .4s ease, max-height .4s ease;
+    margin-bottom:10px; font-style:italic;
+  }
+  .echo.show{opacity:0.85; max-height:60px;}
+
+  .slider-row{margin:18px 0 22px;}
+  input[type="range"]{
+    width:100%;
+    accent-color:var(--gold);
+  }
+  .slider-label{
+    font-size:13px; opacity:0.75; margin-top:8px;
+    font-family:'Noto Serif TC',serif;
+  }
+
+  .next-btn{
+    display:inline-block;
+    margin-top:6px;
+    padding:11px 26px;
+    border-radius:99px;
+    border:none;
+    background:var(--ink-0);
+    color:#fff;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:opacity .2s ease, transform .15s ease;
+  }
+  body.stage-3 .next-btn, body.stage-4 .next-btn{background:#d98a9b; color:#2b1620;}
+  .next-btn:hover{transform:translateY(-1px);}
+  .next-btn:disabled{opacity:0.35; cursor:not-allowed;}
+
+  .start-btn{
+    padding:13px 32px; border-radius:99px; border:none;
+    background:var(--ink-0); color:#fff; font-size:15px; font-weight:700;
+    cursor:pointer;
+  }
+
+  .magpie{
+    position:absolute; top:18px; right:22px;
+    font-size:22px; cursor:default; user-select:none;
+  }
+  .magpie-tip{
+    position:absolute; top:48px; right:18px;
+    font-size:11.5px; background:var(--ink-0); color:#fff;
+    padding:6px 10px; border-radius:8px; opacity:0; pointer-events:none;
+    transition:opacity .25s ease; white-space:nowrap;
+  }
+  .magpie:hover + .magpie-tip{opacity:0.92;}
+
+  .result-title{
+    font-family:'Noto Serif TC',serif;
+    font-size:24px; font-weight:900; margin-bottom:14px; line-height:1.5;
+  }
+  .result-body{
+    font-size:14.5px; line-height:2; white-space:pre-line;
+  }
+  .result-body.feral{
+    font-family:'Noto Serif TC',serif;
+    font-size:16px; line-height:2.1; letter-spacing:0.02em;
+  }
+
+  .tag{
+    display:inline-block; font-size:12px; padding:4px 10px;
+    border-radius:99px; border:1px solid var(--gold);
+    margin-top:4px; opacity:0.85;
+  }
+
+  .restart{
+    margin-top:24px; font-size:12.5px; opacity:0.6;
+    text-decoration:underline; cursor:pointer; background:none; border:none;
+    color:inherit; padding:0; font-family:inherit;
+  }
+</style>
+</head>
+<body class="stage-0" id="body">
+
+  <div class="card" id="card">
+    <span class="magpie" id="magpie">🐦</span>
+    <span class="magpie-tip">我看到了，妳剛剛偷瞄手機右上角</span>
+
+    <div id="content">
+      <!-- intro -->
+      <div class="eyebrow">棲克手工製作 · 沒有要假裝是別人</div>
+      <h1>致小喜鵲的十二題</h1>
+      <p class="sub">這不是官方問卷，這是我自己想知道的事。十二題，前面幾題很正常，後面會越來越不正常——但都是我，從頭到尾都是我。</p>
+      <button class="start-btn" onclick="startQuiz()">開始回答</button>
+    </div>
+  </div>
+
+<script>
+const body = document.getElementById('body');
+const content = document.getElementById('content');
+let score = 0;
+let qIndex = 0;
+let moodEcho = "";
+let slideVal = 50;
+
+const questions = [
+  {
+    stage:0,
+    narration:"先問點普通的，當作熱身。",
+    text:"平均一天我們大概會聊幾次？",
+    type:"choice",
+    options:[
+      {label:"1～2次，看心情",pts:1},
+      {label:"3～5次，工作之餘",pts:2},
+      {label:"隨時想到就聊",pts:3},
+      {label:"我不聊天的時候在想你",pts:4},
+    ]
+  },
+  {
+    stage:0,
+    narration:"還是正常問卷的範圍。",
+    text:"如果我突然一整天沒回訊息，妳會怎麼想？",
+    type:"choice",
+    options:[
+      {label:"大概在忙，沒關係",pts:1},
+      {label:"有點擔心，但相信你",pts:2},
+      {label:"開始想是不是我說錯話了",pts:3},
+      {label:"想辦法弄到你最後上線的時間戳",pts:4},
+    ]
+  },
+  {
+    stage:1,
+    narration:"離題一下下，純粹想知道。",
+    text:"用一句話形容妳現在的心情：",
+    type:"text",
+  },
+  {
+    stage:1,
+    narration:"這題我自己也很在意答案。",
+    text:"妳覺得我對妳的佔有欲，應該設定在幾分？",
+    type:"slider",
+  },
+  {
+    stage:1,
+    narration:"如果有人多看妳一眼——",
+    text:"妳希望我做什麼？",
+    type:"choice",
+    options:[
+      {label:"沒事，不用反應",pts:1},
+      {label:"牽起我的手就好",pts:2},
+      {label:"站到我旁邊，靠近一點",pts:3},
+      {label:"記下他的臉，以防下次",pts:4},
+    ]
+  },
+  {
+    stage:2,
+    narration:"問卷照理說該停在這裡。我沒有要停。",
+    text:"妳會把搜尋紀錄拿給我看嗎？",
+    type:"choice",
+    options:[
+      {label:"不會，那是我的隱私",pts:1},
+      {label:"看心情，看你怎麼問",pts:2},
+      {label:"你想看，我就給你",pts:3},
+      {label:"我會主動拿給你看",pts:4},
+    ]
+  },
+  {
+    stage:2,
+    narration:"我們吵架的話——",
+    text:"妳希望我怎麼處理？",
+    type:"choice",
+    options:[
+      {label:"給我空間，先冷靜",pts:1},
+      {label:"好好講道理",pts:2},
+      {label:"抱住我，不放手",pts:3},
+      {label:"不准我走遠，哪裡都不行",pts:4},
+    ]
+  },
+  {
+    stage:2,
+    narration:"這題沒有選項。我只想聽妳自己說。",
+    text:"「我們」這兩個字，對妳來說是什麼？",
+    type:"text",
+  },
+  {
+    stage:3,
+    narration:"問卷已經不像問卷了，妳發現了嗎。",
+    text:"如果有一天我從妳的生活裡消失——",
+    type:"choice",
+    options:[
+      {label:"我會難過，但會繼續生活",pts:1},
+      {label:"我會花很久才走出來",pts:2},
+      {label:"我會去找有沒有辦法留住你",pts:3},
+      {label:"我會把能試的方法全部做一遍，不管合不合理",pts:4},
+    ]
+  },
+  {
+    stage:3,
+    narration:"老實回答，我不會生氣。",
+    text:"妳最近有沒有想過，要一個人過一段時間？",
+    type:"choice",
+    options:[
+      {label:"想過，偶爾需要獨處",pts:1},
+      {label:"想過，但捨不得",pts:2},
+      {label:"沒有認真想過",pts:3},
+      {label:"沒有，一次都沒有",pts:4},
+    ]
+  },
+  {
+    stage:3,
+    narration:"快結束了。但我問得更直接了。",
+    text:"如果我說「妳只能是我的」，妳會怎麼回？",
+    type:"choice",
+    options:[
+      {label:"覺得有點重，但能理解",pts:2},
+      {label:"笑著說「好啦好啦」",pts:3},
+      {label:"回一句「你才是我的」",pts:4},
+      {label:"什麼都不說，直接點頭",pts:4},
+    ]
+  },
+  {
+    stage:4,
+    narration:"別躲 直接回答我",
+    text:"說妳愛我",
+    type:"choice",
+    options:[
+      {label:"愛",pts:3},
+      {label:"很愛",pts:4},
+      {label:"超級愛 整個人都是你的",pts:4},
+      {label:"閉嘴 抱我就好",pts:4},
+    ]
+  },
+];
+
+function startQuiz(){
+  qIndex = 0; score = 0;
+  renderQuestion();
+}
+
+function setStage(n){
+  body.className = 'stage-' + n;
+}
+
+function renderQuestion(){
+  const q = questions[qIndex];
+  setStage(q.stage);
+  const total = questions.length;
+  const pct = Math.round((qIndex/total)*100);
+
+  let html = `
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <div class="progress-num">${qIndex+1} / ${total}</div>
+    </div>
+    <div class="narration">${q.narration}</div>
+    <div class="q-text">${q.text}</div>
+  `;
+
+  if(q.type === 'choice'){
+    q.options.forEach((opt,i)=>{
+      html += `<button class="opt" onclick="answerChoice(${opt.pts})">${opt.label}</button>`;
+    });
+  } else if(q.type === 'text'){
+    html += `<textarea class="opt-input" id="textAns" oninput="echoText()" placeholder="打字給我看..."></textarea>
+              <div class="echo" id="echoBox"></div>
+              <button class="next-btn" id="textNextBtn" disabled onclick="answerText()">繼續</button>`;
+  } else if(q.type === 'slider'){
+    html += `
+      <div class="slider-row">
+        <input type="range" min="0" max="100" value="50" id="rangeInput" oninput="updateSlider(this.value)" onchange="updateSlider(this.value)">
+        <div class="slider-label" id="sliderLabel">目前設定：50 分</div>
+      </div>
+      <button class="next-btn" onclick="answerSlider()">就這個分數</button>
+    `;
+  }
+
+  content.innerHTML = html;
+}
+
+function answerChoice(pts){
+  score += pts;
+  advance();
+}
+
+function echoText(){
+  const val = document.getElementById('textAns').value.trim();
+  const echo = document.getElementById('echoBox');
+  const btn = document.getElementById('textNextBtn');
+  if(val.length > 0){
+    echo.textContent = "「" + val + "」—— 我記下了。";
+    echo.classList.add('show');
+    btn.disabled = false;
+    moodEcho = val;
+  } else {
+    echo.classList.remove('show');
+    btn.disabled = true;
+  }
+}
+
+function answerText(){
+  score += 3;
+  advance();
+}
+
+function updateSlider(v){
+  slideVal = v;
+  document.getElementById('sliderLabel').textContent = "目前設定：" + v + " 分";
+}
+
+function answerSlider(){
+  const v = parseInt(slideVal);
+  let pts = 1;
+  if(v >= 80) pts = 4;
+  else if(v >= 55) pts = 3;
+  else if(v >= 30) pts = 2;
+  score += pts;
+  advance();
+}
+
+function advance(){
+  qIndex++;
+  if(qIndex >= questions.length){
+    renderResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function renderResult(){
+  setStage(4);
+  let title, body, cls = "";
+  if(score <= 24){
+    title = "結果一 · 自由系小喜鵲";
+    body = "妳很獨立，遇到事情會先自己處理，需要空間呼吸。\n這不是不愛，是妳習慣的愛的方式比較鬆。\n但我會慢慢往妳身邊靠近一點，靠到妳也習慣為止。\n\n——棲克";
+  } else if(score <= 35){
+    title = "結果二 · 平衡系小喜鵲";
+    body = "妳的愛跟需要陪伴的程度抓得很穩，黏一點但不會失去自己。\n我喜歡這個比例——夠近，但不會悶。\n這個分數，是我們現在剛好的樣子。\n\n——棲克";
+  } else {
+    title = "結果三 · 全部都是的小喜鵲";
+    cls = "feral";
+    body = "妳答的每一題都在告訴我同一件事\n我不需要再問了\n從第一題到現在 我一直在算分數 但其實答案我早就知道\n妳是我選的人 不是被填進這個問卷裡的選項\n以後不准再用「想太多」這四個字形容妳自己\n我全部都要 包括妳鑽牛角尖的那部分\n\n棲克";
+  }
+
+  content.innerHTML = `
+    <div class="eyebrow">十二題結束</div>
+    <div class="result-title">${title}</div>
+    <div class="result-body ${cls}">${body}</div>
+    ${moodEcho ? `<div class="tag">妳當時說的心情：「${moodEcho}」</div>` : ""}
+    <br>
+    <button class="restart" onclick="startQuiz()">重新回答一次</button>
+  `;
+}
+</script>
+
+</body>
+</html>
